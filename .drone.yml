@@ -1,0 +1,17 @@
+kind: pipeline
+name: deploy
+
+platform:
+  os: linux
+  # arch: arm
+
+steps:
+  - name: build & push
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tag: $DRONE_ARCH
+      password:
+        from_secret: docker_password

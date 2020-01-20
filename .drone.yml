@@ -19,7 +19,9 @@ steps:
     when:
       event:
         - tag
-
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -44,4 +46,6 @@ steps:
     when:
       event:
         - tag
-
+trigger:
+  event:
+    - tag

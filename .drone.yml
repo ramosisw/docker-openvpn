@@ -3,7 +3,7 @@ name: deploy
 
 platform:
   os: linux
-  # arch: arm
+  arch: arm
 
 steps:
   - name: build & push

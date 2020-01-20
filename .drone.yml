@@ -21,6 +21,7 @@ steps:
         - tag
 trigger:
   event:
+    - push
     - tag
 
 ---
@@ -48,4 +49,5 @@ steps:
         - tag
 trigger:
   event:
+    - push
     - tag

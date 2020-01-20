@@ -1,5 +1,5 @@
 kind: pipeline
-name: deploy
+name: build-arm
 
 platform:
   os: linux
@@ -13,7 +13,35 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - "arm"
+        - arm
       password:
         from_secret: docker_password
+    when:
+      event:
+        - tag
+
+
+---
+
+kind: pipeline
+name: build-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build & push
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - amd64
+      password:
+        from_secret: docker_password
+    when:
+      event:
+        - tag
 

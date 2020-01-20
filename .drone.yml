@@ -13,7 +13,7 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - "${DRONE_ARCH}"
+        - "arm"
       password:
         from_secret: docker_password
 

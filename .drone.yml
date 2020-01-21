@@ -10,10 +10,10 @@ steps:
     image: plugins/docker
     settings:
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - arm
         - ${DRONE_TAG}-arm
-      username: ramosisw
       password:
         from_secret: docker_password
 
@@ -36,10 +36,10 @@ steps:
     image: plugins/docker
     settings:
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
-      username: ramosisw
       password:
         from_secret: docker_password
 
@@ -62,10 +62,10 @@ steps:
     image: plugins/docker
     settings:
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
-      username: ramosisw
       password:
         from_secret: docker_password
 

@@ -1,3 +1,4 @@
+### BUILD-ARM
 kind: pipeline
 name: build-arm
 
@@ -12,10 +13,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - dev-arm
     when:
-      branch: master
       event: push
 
   - name: build & push
@@ -24,13 +26,12 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - arm
         - ${DRONE_TAG}-arm
-      password:
-        from_secret: docker_password
     when:
-      branch: master
       event: tag
 
 trigger:
@@ -39,7 +40,7 @@ trigger:
     - push
 
 ---
-
+### BUILD-ARM64
 kind: pipeline
 name: build-arm64
 
@@ -54,10 +55,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - dev-arm64
     when:
-      branch: master
       event: push
 
   - name: build & push
@@ -66,13 +68,12 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
-      password:
-        from_secret: docker_password
     when:
-      branch: master
       event: tag
 
 trigger:
@@ -81,7 +82,7 @@ trigger:
     - push
 
 ---
-
+### BUILD-AMD64
 kind: pipeline
 name: build-amd64
 
@@ -96,10 +97,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - dev-amd64
     when:
-      branch: master
       event: push
 
   - name: build & push
@@ -108,13 +110,12 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
+      password:
+        from_secret: docker_password
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
-      password:
-        from_secret: docker_password
     when:
-      branch: master
       event: tag
 
 trigger:
@@ -123,7 +124,7 @@ trigger:
     - push
 
 ---
-
+### MULTIARCH
 kind: pipeline
 name: multiarch
 
@@ -141,7 +142,6 @@ steps:
         - linux/arm64
         - linux/amd64
     when:
-      branch: master
       event: push
 
   - name: manifest latest
@@ -157,7 +157,6 @@ steps:
         - linux/arm64
         - linux/amd64
     when:
-      branch: master
       event: tag
 
   - name: manifest ${DRONE_TAG}
@@ -173,7 +172,6 @@ steps:
         - linux/arm64
         - linux/amd64
     when:
-      branch: master
       event: tag
 
 trigger:

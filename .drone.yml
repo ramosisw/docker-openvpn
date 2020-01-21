@@ -16,9 +16,9 @@ steps:
         - arm
       password:
         from_secret: docker_password
-# trigger:
-#   event:
-#     - tag
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -40,9 +40,9 @@ steps:
         - amd64
       password:
         from_secret: docker_password
-# trigger:
-#   event:
-#     - tag
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -72,6 +72,6 @@ steps:
       - docker manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
       - docker manifest push ramosisw/openvpn
 
-depends_on:
- - build-arm
- - build-amd64
+# depends_on:
+#  - build-arm
+#  - build-amd64

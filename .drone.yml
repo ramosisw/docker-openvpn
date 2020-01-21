@@ -20,6 +20,7 @@ steps:
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -45,6 +46,7 @@ steps:
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -70,6 +72,7 @@ steps:
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -106,6 +109,7 @@ steps:
 trigger:
   event:
     - tag
+    - push
 
 depends_on:
  - build-arm

@@ -51,13 +51,14 @@ name: multiarch
 
 steps:
   - name: pull tag and push
+    image: docker:dind
     environment:
       repo: "ramosisw/openvpn"
       username: ramosisw
       password:
         from_secret: docker_password
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - echo ${repo}
       - echo "${repo}"

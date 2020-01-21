@@ -1,4 +1,29 @@
 kind: pipeline
+name: dev-build-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: push
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - dev-arm
+      password:
+        from_secret: docker_password
+
+trigger:
+  event:
+    - push
+
+---
+
+kind: pipeline
 name: build-arm
 
 platform:
@@ -8,15 +33,15 @@ platform:
 steps:
   - name: push
     image: plugins/docker
-      username: ramosisw
     settings:
-      password:
-        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - arm
         - ${DRONE_TAG}-arm
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -35,14 +60,14 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      username: ramosisw
-      password:
-        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -61,14 +86,14 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      username: ramosisw
-      password:
-        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
+      username: ramosisw
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:

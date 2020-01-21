@@ -14,7 +14,7 @@ steps:
       username: ramosisw
       tags: 
         - arm
-        - ${DRONE_TAG-%%arm}
+        - ${DRONE_TAG}-arm
       password:
         from_secret: docker_password
 

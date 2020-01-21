@@ -8,15 +8,15 @@ platform:
 steps:
   - name: push
     image: plugins/docker
+      username: ramosisw
     settings:
+      password:
+        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
-      username: ramosisw
       tags: 
         - arm
         - ${DRONE_TAG}-arm
-      password:
-        from_secret: docker_password
 
 trigger:
   event:
@@ -35,14 +35,14 @@ steps:
   - name: push
     image: plugins/docker
     settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
-      username: ramosisw
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
-      password:
-        from_secret: docker_password
 
 trigger:
   event:
@@ -61,14 +61,14 @@ steps:
   - name: push
     image: plugins/docker
     settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
-      username: ramosisw
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
-      password:
-        from_secret: docker_password
 
 trigger:
   event:

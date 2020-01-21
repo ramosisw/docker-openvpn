@@ -30,8 +30,8 @@ steps:
       tags: 
         - arm
         - ${DRONE_TAG}-arm
-    when:
-      event: tag
+    # when:
+    #   event: tag
 
 trigger:
   event:
@@ -71,8 +71,8 @@ steps:
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
-    when:
-      event: tag
+    # when:
+    #   event: tag
 
 trigger:
   event:
@@ -112,8 +112,8 @@ steps:
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
-    when:
-      event: tag
+    # when:
+    #   event: tag
 
 trigger:
   event:
@@ -153,8 +153,8 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
-    when:
-      event: tag
+    # when:
+    #   event: tag
 
   - name: manifest ${DRONE_TAG}
     image: plugins/manifest
@@ -168,8 +168,8 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
-    when:
-      event: tag
+    # when:
+    #   event: tag
 
 trigger:
   event:

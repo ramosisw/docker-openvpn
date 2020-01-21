@@ -51,16 +51,20 @@ name: multiarch
 
 steps:
   - name: pull tag and push
-    image: plugins/docker
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    settings:
+    environment:
+      repo: "ramosisw/openvpn"
       username: ramosisw
       password:
         from_secret: docker_password
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
     commands:
+      - echo ${repo}
+      - echo "${repo}"
+      - export DOCKER_USERNAME=${username}
+      - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      # - docker login -u $$username -p $$password
+      - docker login -u $$username -p $$password
       - docker pull ramosisw/openvpn:amd64
       - docker pull ramosisw/openvpn:arm
       - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
@@ -68,5 +72,5 @@ steps:
       - docker manifest push ramosisw/openvpn
 
 depends_on:
-  - build-arm
-  - build-amd64
+ - build-arm
+ - build-amd64

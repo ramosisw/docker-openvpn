@@ -58,17 +58,16 @@ steps:
       password:
         from_secret: docker_password
     commands:
-      - echo [$password] [$$password] [${password}] [$${password}] [$PASSWORD] [$$PASSWORD] [${PASSWORD}] [$${PASSWORD}] 
       - export DOCKER_USERNAME=${username}
       - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled
       - docker login -u $$username -p $$password
-      - docker pull ${repo}:amd64
-      - docker pull ${repo}:arm
-      - docker manifest create ${repo} ${repo}:amd64 ${repo}:arm
-      - docker manifest annotate --arch arm ${repo} ${repo}:arm
-      - docker manifest push ${repo}
+      - docker pull $$repo:amd64
+      - docker pull $$repo:arm
+      - docker manifest create $$repo $$repo:amd64 $$repo:arm
+      - docker manifest annotate --arch arm $$repo $$repo:arm
+      - docker manifest push $$repo
 
 depends_on:
-- build-arm
-- build-amd64
+ - build-arm
+ - build-amd64

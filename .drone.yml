@@ -12,10 +12,10 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: 
-        - 'dev-arm'
       password:
         from_secret: docker_password
+      tags: 
+        - 'dev-arm'
 
 trigger:
   event:
@@ -38,10 +38,10 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - arm
-        - ${DRONE_TAG}-arm
       password:
         from_secret: docker_password
+        - arm
+        - ${DRONE_TAG}-arm
 
 trigger:
   event:
@@ -64,10 +64,10 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - arm64
-        - ${DRONE_TAG}-arm64
       password:
         from_secret: docker_password
+        - arm64
+        - ${DRONE_TAG}-arm64
 
 trigger:
   event:
@@ -90,10 +90,10 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - amd64
-        - ${DRONE_TAG}-amd64
       password:
         from_secret: docker_password
+        - amd64
+        - ${DRONE_TAG}-amd64
 
 trigger:
   event:
@@ -106,10 +106,10 @@ name: dev-multiarch
 steps:
   - name: manifest latest
     image: plugins/manifest
-    settings:
-      username: ramosisw
       password:
         from_secret: docker_password
+    settings:
+      username: ramosisw
       target: ramosisw/openvpn:dev
       template: ramosisw/openvpn:dev-ARCH
       platforms:
@@ -134,10 +134,10 @@ name: multiarch
 steps:
   - name: manifest latest
     image: plugins/manifest
-    settings:
-      username: ramosisw
       password:
         from_secret: docker_password
+    settings:
+      username: ramosisw
       target: ramosisw/openvpn:latest
       template: ramosisw/openvpn:ARCH
       platforms:
@@ -147,10 +147,10 @@ steps:
 
   - name: manifest ${DRONE_TAG}
     image: plugins/manifest
-    settings:
-      username: ramosisw
       password:
         from_secret: docker_password
+    settings:
+      username: ramosisw
       target: ramosisw/openvpn:${DRONE_TAG}
       template: ramosisw/openvpn:${DRONE_TAG}-ARCH
       platforms:

@@ -13,7 +13,7 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - dev-arm
+        - 'dev-arm'
       password:
         from_secret: docker_password
 

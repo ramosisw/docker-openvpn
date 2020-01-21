@@ -55,7 +55,7 @@ steps:
     secrets: [ docker_password ]
     commands:
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      - docker login --username ramosisw --password $$DOCKER_PASSWORD
+      - "docker login --username ramosisw --password $$DOCKER_PASSWORD"
       - docker pull ramosisw/openvpn:amd64
       - docker pull ramosisw/openvpn:arm
       - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm

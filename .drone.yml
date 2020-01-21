@@ -16,12 +16,9 @@ steps:
         - arm
       password:
         from_secret: docker_password
-    when:
-      event:
-        - tag
-trigger:
-  event:
-    - tag
+# trigger:
+#   event:
+#     - tag
 
 ---
 
@@ -43,9 +40,22 @@ steps:
         - amd64
       password:
         from_secret: docker_password
-    when:
-      event:
-        - tag
-trigger:
-  event:
-    - tag
+# trigger:
+#   event:
+#     - tag
+
+---
+
+kind: pipeline
+name: multiarch
+
+steps:
+  - name: pull tag and push
+    image: docker:dind
+    secrets: [ docker_password ]
+    commands:
+      - echo "$$DOCKER_PASSWORD" | docker --config . login --username ramosisw --password-stdin
+      - docker pull ramosisw/openvpn
+      - docker --config . manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
+      - docker --config . manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
+      - docker --config . manifest push ramosisw/openvpn

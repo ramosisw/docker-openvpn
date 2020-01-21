@@ -6,7 +6,7 @@ platform:
   arch: arm
 
 steps:
-  - name: build and push
+  - name: push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -14,11 +14,13 @@ steps:
       username: ramosisw
       tags: 
         - arm
+        - $$TAG-arm
       password:
         from_secret: docker_password
-# trigger:
-#   event:
-#     - tag
+
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -30,7 +32,7 @@ platform:
   arch: arm64
 
 steps:
-  - name: build and push
+  - name: push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -38,11 +40,13 @@ steps:
       username: ramosisw
       tags: 
         - arm64
+        - $$TAG-arm64
       password:
         from_secret: docker_password
-# trigger:
-#   event:
-#     - tag
+
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -54,7 +58,7 @@ platform:
   arch: amd64
 
 steps:
-  - name: build and push
+  - name: push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -62,11 +66,13 @@ steps:
       username: ramosisw
       tags: 
         - amd64
+        - $$TAG-amd64
       password:
         from_secret: docker_password
-# trigger:
-#   event:
-#     - tag
+
+trigger:
+  event:
+    - tag
 
 ---
 
@@ -74,7 +80,7 @@ kind: pipeline
 name: multiarch
 
 steps:
-  - name: manifest
+  - name: manifest latest
     image: plugins/manifest
     settings:
       username: ramosisw
@@ -86,6 +92,23 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
+        
+  - name: manifest $$TAG
+    image: plugins/manifest
+    settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
+      target: ramosisw/openvpn:$$TAG
+      template: ramosisw/openvpn:$$TAG-ARCH
+      platforms:
+        - linux/arm
+        - linux/arm64
+        - linux/amd64
+
+trigger:
+  event:
+    - tag
 
 depends_on:
  - build-arm

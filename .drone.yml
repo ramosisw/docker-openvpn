@@ -9,10 +9,9 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-        - ${DRONE_TAG}dev-arm
+        - dev-arm
       password:
         from_secret: docker_password

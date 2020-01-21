@@ -12,11 +12,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      password:
-        from_secret: docker_password
       tags: 
         - arm
         - ${DRONE_TAG}-arm
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -38,11 +38,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      password:
-        from_secret: docker_password
       tags: 
         - arm64
         - ${DRONE_TAG}-arm64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -64,11 +64,11 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      password:
-        from_secret: docker_password
       tags: 
         - amd64
         - ${DRONE_TAG}-amd64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -81,11 +81,11 @@ name: multiarch
 
 steps:
   - name: manifest latest
-      password:
-        from_secret: docker_password
     image: plugins/manifest
     settings:
       username: ramosisw
+      password:
+        from_secret: docker_password
       target: ramosisw/openvpn:latest
       template: ramosisw/openvpn:ARCH
       platforms:
@@ -94,11 +94,11 @@ steps:
         - linux/amd64
 
   - name: manifest ${DRONE_TAG}
-      password:
-        from_secret: docker_password
     image: plugins/manifest
     settings:
       username: ramosisw
+      password:
+        from_secret: docker_password
       target: ramosisw/openvpn:${DRONE_TAG}
       template: ramosisw/openvpn:${DRONE_TAG}-ARCH
       platforms:

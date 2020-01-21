@@ -53,20 +53,22 @@ steps:
   - name: pull tag and push
     image: docker:dind
     environment:
-      repo: ramosisw/openvpn
+      repo: "ramosisw/openvpn"
       username: ramosisw
       password:
         from_secret: docker_password
     commands:
+      - echo ${repo}
+      - echo "${repo}"
       - export DOCKER_USERNAME=${username}
       - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled
       - docker login -u $$username -p $$password
-      - docker pull $$repo:amd64
-      - docker pull $$repo:arm
-      - docker manifest create $$repo $$repo:amd64 $$repo:arm
-      - docker manifest annotate --arch arm $$repo $$repo:arm
-      - docker manifest push $$repo
+      - docker pull ramosisw/openvpn:amd64
+      - docker pull ramosisw/openvpn:arm
+      - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
+      - docker manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
+      - docker manifest push ramosisw/openvpn
 
 depends_on:
  - build-arm

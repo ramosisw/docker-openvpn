@@ -60,6 +60,7 @@ steps:
     # volumes:
     #   - /var/run/docker.sock:/var/run/docker.sock
     commands:
+      - sleep 10
       - echo ${repo}
       - echo "${repo}"
       - export DOCKER_USERNAME=${username}

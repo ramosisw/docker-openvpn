@@ -16,10 +16,6 @@ steps:
       password:
         from_secret: docker_password
 
-trigger:
-  event:
-    - push
-
 ---
 
 kind: pipeline

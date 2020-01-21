@@ -14,7 +14,7 @@ steps:
       username: ramosisw
       tags: 
         - arm
-        - $$TAG-arm
+        - $$DRONE_TAG-arm
       password:
         from_secret: docker_password
 
@@ -40,7 +40,7 @@ steps:
       username: ramosisw
       tags: 
         - arm64
-        - $$TAG-arm64
+        - $$DRONE_TAG-arm64
       password:
         from_secret: docker_password
 
@@ -66,7 +66,7 @@ steps:
       username: ramosisw
       tags: 
         - amd64
-        - $$TAG-amd64
+        - $$DRONE_TAG-amd64
       password:
         from_secret: docker_password
 
@@ -92,15 +92,15 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
-        
-  - name: manifest $$TAG
+
+  - name: manifest $$DRONE_TAG
     image: plugins/manifest
     settings:
       username: ramosisw
       password:
         from_secret: docker_password
-      target: ramosisw/openvpn:$$TAG
-      template: ramosisw/openvpn:$$TAG-ARCH
+      target: ramosisw/openvpn:$$DRONE_TAG
+      template: ramosisw/openvpn:$$DRONE_TAG-ARCH
       platforms:
         - linux/arm
         - linux/arm64

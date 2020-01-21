@@ -1,5 +1,5 @@
 kind: pipeline
-name: dev-build-arm
+name: dev_build-arm
 
 platform:
   os: linux

@@ -1,4 +1,29 @@
 kind: pipeline
+name: dev-build-arm
+
+platform:
+  os: linux
+  arch: arm
+
+steps:
+  - name: push
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - dev-arm
+      password:
+        from_secret: docker_password
+
+trigger:
+  event:
+    - push
+
+---
+
+kind: pipeline
 name: build-arm
 
 platform:
@@ -73,6 +98,33 @@ steps:
 trigger:
   event:
     - tag
+
+---
+kind: pipeline
+name: dev-multiarch
+
+steps:
+  - name: manifest latest
+    image: plugins/manifest
+    settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
+      target: ramosisw/openvpn:dev
+      template: ramosisw/openvpn:dev-ARCH
+      platforms:
+        - linux/arm
+        # - linux/arm64
+        # - linux/amd64
+
+trigger:
+  event:
+    - push
+
+depends_on:
+ - dev-build-arm
+#  - build-arm64
+#  - build-amd64
 
 ---
 

@@ -16,9 +16,33 @@ steps:
         - arm
       password:
         from_secret: docker_password
-trigger:
-  event:
-    - tag
+# trigger:
+#   event:
+#     - tag
+
+---
+
+kind: pipeline
+name: build-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: build and push
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - arm64
+      password:
+        from_secret: docker_password
+# trigger:
+#   event:
+#     - tag
 
 ---
 
@@ -40,9 +64,9 @@ steps:
         - amd64
       password:
         from_secret: docker_password
-trigger:
-  event:
-    - tag
+# trigger:
+#   event:
+#     - tag
 
 ---
 
@@ -59,10 +83,11 @@ steps:
       target: ramosisw/openvpn:latest
       template: ramosisw/openvpn:ARCH
       platforms:
-        - linux/amd64
         - linux/arm
         - linux/arm64
+        - linux/amd64
 
-# depends_on:
-#  - build-arm
-#  - build-amd64
+depends_on:
+ - build-arm
+ - build-arm64
+ - build-amd64

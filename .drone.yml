@@ -61,8 +61,8 @@ steps:
       DOCKER_CLI_EXPERIMENTAL: enabled
     entrypoint: ["/bin/sh", "/usr/local/bin/dockerd-entrypoint.sh", "$@"]
     commands:
+      - sleep 30
       - docker -v
-      - nohup dockerd &
       - docker login -u $$username -p $$password
       - docker pull $repo:amd64
       # - docker pull $repo:arm

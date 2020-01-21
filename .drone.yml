@@ -6,7 +6,19 @@ platform:
   arch: arm
 
 steps:
-  - name: push
+  - name: build
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - dev-arm
+    when:
+      branch: master
+      event: push
+
+  - name: build & push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -17,10 +29,14 @@ steps:
         - ${DRONE_TAG}-arm
       password:
         from_secret: docker_password
+    when:
+      branch: master
+      event: tag
 
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -32,7 +48,19 @@ platform:
   arch: arm64
 
 steps:
-  - name: push
+  - name: build
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - dev-arm64
+    when:
+      branch: master
+      event: push
+
+  - name: build & push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -43,10 +71,14 @@ steps:
         - ${DRONE_TAG}-arm64
       password:
         from_secret: docker_password
+    when:
+      branch: master
+      event: tag
 
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -58,7 +90,19 @@ platform:
   arch: amd64
 
 steps:
-  - name: push
+  - name: build
+    image: plugins/docker
+    settings:
+      dockerfile: ./Dockerfile
+      repo: ramosisw/openvpn
+      username: ramosisw
+      tags: 
+        - dev-amd64
+    when:
+      branch: master
+      event: push
+
+  - name: build & push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -69,10 +113,14 @@ steps:
         - ${DRONE_TAG}-amd64
       password:
         from_secret: docker_password
+    when:
+      branch: master
+      event: tag
 
 trigger:
   event:
     - tag
+    - push
 
 ---
 
@@ -86,12 +134,31 @@ steps:
       username: ramosisw
       password:
         from_secret: docker_password
+      target: ramosisw/openvpn:dev
+      template: ramosisw/openvpn:dev-ARCH
+      platforms:
+        - linux/arm
+        - linux/arm64
+        - linux/amd64
+    when:
+      branch: master
+      event: push
+
+  - name: manifest latest
+    image: plugins/manifest
+    settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
       target: ramosisw/openvpn:latest
       template: ramosisw/openvpn:ARCH
       platforms:
         - linux/arm
         - linux/arm64
         - linux/amd64
+    when:
+      branch: master
+      event: tag
 
   - name: manifest ${DRONE_TAG}
     image: plugins/manifest
@@ -105,10 +172,14 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
+    when:
+      branch: master
+      event: tag
 
 trigger:
   event:
     - tag
+    - push
 
 depends_on:
  - build-arm

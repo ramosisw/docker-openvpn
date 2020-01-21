@@ -58,7 +58,7 @@ steps:
         from_secret: docker_password
     commands:
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      - docker login -u $$username -p $$password
+      # - docker login -u $$username -p $$password
       - docker pull ramosisw/openvpn:amd64
       - docker pull ramosisw/openvpn:arm
       - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
@@ -66,5 +66,5 @@ steps:
       - docker manifest push ramosisw/openvpn
 
 depends_on:
- - build-arm
- - build-amd64
+  - build-arm
+  - build-amd64

@@ -12,8 +12,7 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: 
-        - dev-arm
+      tags: [ dev-arm ]
       password:
         from_secret: docker_password
 

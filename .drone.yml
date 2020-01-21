@@ -51,17 +51,12 @@ name: multiarch
 
 steps:
   - name: pull tag and push
-    image: docker:dind
-    environment:
-      repo: "ramosisw/openvpn"
+    image: plugins/docker
+    settings:
       username: ramosisw
       password:
         from_secret: docker_password
     commands:
-      - echo ${repo}
-      - echo "${repo}"
-      - export DOCKER_USERNAME=${username}
-      - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled
       - docker login -u $$username -p $$password
       - docker pull ramosisw/openvpn:amd64

@@ -52,14 +52,19 @@ name: multiarch
 steps:
   - name: pull tag and push
     image: docker:dind
+    environment:
+      repo: ramosisw/openvpn
+      username: ramosisw
+      password:
+        from_secret: docker_password
     commands:
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      - "docker login --username ramosisw --password $$docker_password"
-      - docker pull ramosisw/openvpn:amd64
-      - docker pull ramosisw/openvpn:arm
-      - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
-      - docker manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
-      - docker manifest push ramosisw/openvpn
+      - "docker login --username ${username} --password $${password}
+      - docker pull ${repo}:amd64
+      - docker pull ${repo}:arm
+      - docker manifest create ${repo} ${repo}:amd64 ${repo}:arm
+      - docker manifest annotate --arch arm ${repo} ${repo}:arm
+      - docker manifest push ${repo}
 
 depends_on:
 - build-arm

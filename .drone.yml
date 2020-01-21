@@ -1,29 +1,4 @@
 kind: pipeline
-name: dev-build-arm
-
-platform:
-  os: linux
-  arch: arm
-
-steps:
-  - name: push
-    image: plugins/docker
-    settings:
-      dockerfile: ./Dockerfile
-      repo: ramosisw/openvpn
-      username: ramosisw
-      password:
-        from_secret: docker_password
-      tags: 
-        - 'dev-arm'
-
-trigger:
-  event:
-    - push
-
----
-
-kind: pipeline
 name: build-arm
 
 platform:
@@ -38,10 +13,10 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-      password:
-        from_secret: docker_password
         - arm
         - ${DRONE_TAG}-arm
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -64,10 +39,10 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-      password:
-        from_secret: docker_password
         - arm64
         - ${DRONE_TAG}-arm64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
@@ -90,41 +65,14 @@ steps:
       repo: ramosisw/openvpn
       username: ramosisw
       tags: 
-      password:
-        from_secret: docker_password
         - amd64
         - ${DRONE_TAG}-amd64
+      password:
+        from_secret: docker_password
 
 trigger:
   event:
     - tag
-
----
-kind: pipeline
-name: dev-multiarch
-
-steps:
-  - name: manifest latest
-    image: plugins/manifest
-      password:
-        from_secret: docker_password
-    settings:
-      username: ramosisw
-      target: ramosisw/openvpn:dev
-      template: ramosisw/openvpn:dev-ARCH
-      platforms:
-        - linux/arm
-        # - linux/arm64
-        # - linux/amd64
-
-trigger:
-  event:
-    - push
-
-depends_on:
- - dev-build-arm
-#  - build-arm64
-#  - build-amd64
 
 ---
 
@@ -134,10 +82,10 @@ name: multiarch
 steps:
   - name: manifest latest
     image: plugins/manifest
-      password:
-        from_secret: docker_password
     settings:
       username: ramosisw
+      password:
+        from_secret: docker_password
       target: ramosisw/openvpn:latest
       template: ramosisw/openvpn:ARCH
       platforms:
@@ -147,10 +95,10 @@ steps:
 
   - name: manifest ${DRONE_TAG}
     image: plugins/manifest
-      password:
-        from_secret: docker_password
     settings:
       username: ramosisw
+      password:
+        from_secret: docker_password
       target: ramosisw/openvpn:${DRONE_TAG}
       template: ramosisw/openvpn:${DRONE_TAG}-ARCH
       platforms:

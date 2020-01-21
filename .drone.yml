@@ -51,18 +51,18 @@ name: multiarch
 
 steps:
   - name: pull tag and push
-    image: docker
+    image: plugins/docker
     environment:
       repo: ramosisw/openvpn"
       username: ramosisw
       password:
         from_secret: docker_password
-    # volumes:
-    #   - /var/run/docker.sock:/var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     commands:
       - sleep 10
-      - echo ${repo}
-      - echo "${repo}"
+      - echo $[{repo}] [$${repo}] [$$repo] [$repo]
+      - echo "$[{repo}] [$${repo}] [$$REPO] [$REPO]"
       - export DOCKER_USERNAME=${username}
       - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled

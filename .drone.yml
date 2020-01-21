@@ -54,7 +54,7 @@ steps:
     image: docker:dind
     secrets: [ docker_password ]
     commands:
-      - echo "$$DOCKER_PASSWORD" | docker --config . login --username ramosisw --password-stdin
+      - docker --config . login --username ramosisw --password $$DOCKER_PASSWORD
       - docker pull ramosisw/openvpn
       - docker --config . manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
       - docker --config . manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm

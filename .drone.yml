@@ -51,7 +51,7 @@ name: multiarch
 
 steps:
   - name: pull tag and push
-    image: plugins/docker
+    image: docker:dind
     # privileged: true
     environment:
       repo: ramosisw/openvpn
@@ -59,6 +59,7 @@ steps:
       password:
         from_secret: docker_password
       DOCKER_CLI_EXPERIMENTAL: enabled
+    entrypoint: ["/bin/sh", "/usr/local/bin/dockerd-entrypoint.sh", "$@"]
     commands:
       - docker -v
       - nohup dockerd &

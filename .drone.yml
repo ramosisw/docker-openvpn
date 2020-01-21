@@ -54,12 +54,14 @@ steps:
     image: docker:dind
     environment:
       repo: ramosisw/openvpn
-      DOCKER_USERNAME: ramosisw
-      DOCKER_PASSWORD :
+      username: ramosisw
+      password:
         from_secret: docker_password
     commands:
+      - export DOCKER_USERNAME=${username}
+      - export DOCKER_PASSWORD=$${password}
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      - docker login
+      - docker login -u ${username} -p $${password}
       - docker pull ${repo}:amd64
       - docker pull ${repo}:arm
       - docker manifest create ${repo} ${repo}:amd64 ${repo}:arm

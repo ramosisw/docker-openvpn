@@ -1,5 +1,5 @@
 kind: pipeline
-name: dev_build-arm
+name: build-arm
 
 platform:
   os: linux
@@ -10,8 +10,104 @@ steps:
     image: plugins/docker
     settings:
       repo: ramosisw/openvpn
-      username: ramosisw
       tags: 
-        - dev-arm
+        - arm
+        - ${DRONE_TAG}-arm
+      username: ramosisw
       password:
         from_secret: docker_password
+
+trigger:
+  event:
+    - tag
+
+---
+
+kind: pipeline
+name: build-arm64
+
+platform:
+  os: linux
+  arch: arm64
+
+steps:
+  - name: push
+    image: plugins/docker
+    settings:
+      repo: ramosisw/openvpn
+      tags: 
+        - arm64
+        - ${DRONE_TAG}-arm64
+      username: ramosisw
+      password:
+        from_secret: docker_password
+
+trigger:
+  event:
+    - tag
+
+---
+
+kind: pipeline
+name: build-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: push
+    image: plugins/docker
+    settings:
+      repo: ramosisw/openvpn
+      tags: 
+        - amd64
+        - ${DRONE_TAG}-amd64
+      username: ramosisw
+      password:
+        from_secret: docker_password
+
+trigger:
+  event:
+    - tag
+
+---
+
+kind: pipeline
+name: multiarch
+
+steps:
+  - name: manifest latest
+    image: plugins/manifest
+    settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
+      target: ramosisw/openvpn:latest
+      template: ramosisw/openvpn:ARCH
+      platforms:
+        - linux/arm
+        - linux/arm64
+        - linux/amd64
+
+  - name: manifest ${DRONE_TAG}
+    image: plugins/manifest
+    settings:
+      username: ramosisw
+      password:
+        from_secret: docker_password
+      target: ramosisw/openvpn:${DRONE_TAG}
+      template: ramosisw/openvpn:${DRONE_TAG}-ARCH
+      platforms:
+        - linux/arm
+        - linux/arm64
+        - linux/amd64
+
+trigger:
+  event:
+    - tag
+
+depends_on:
+ - build-arm
+ - build-arm64
+ - build-amd64

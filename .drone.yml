@@ -59,7 +59,7 @@ steps:
         from_secret: docker_password
     commands:
       - export DOCKER_CLI_EXPERIMENTAL=enabled
-      - "docker login --username ${username} --password $${password}
+      - docker login --username ${username} --password $${password}
       - docker pull ${repo}:amd64
       - docker pull ${repo}:arm
       - docker manifest create ${repo} ${repo}:amd64 ${repo}:arm

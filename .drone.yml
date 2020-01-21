@@ -6,7 +6,7 @@ platform:
   arch: arm
 
 steps:
-  - name: build & push
+  - name: build and push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -30,7 +30,7 @@ platform:
   arch: amd64
 
 steps:
-  - name: build & push
+  - name: build and push
     image: plugins/docker
     settings:
       dockerfile: ./Dockerfile
@@ -57,7 +57,8 @@ steps:
     secrets: [ docker_password ]
     commands:
       - docker login --username ramosisw --password $$DOCKER_PASSWORD
-      - docker pull ramosisw/openvpn
+      - docker pull ramosisw/openvpn:amd64
+      - docker pull ramosisw/openvpn:arm
       - docker manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
       - docker manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
       - docker manifest push ramosisw/openvpn

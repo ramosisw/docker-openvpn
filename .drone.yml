@@ -59,3 +59,7 @@ steps:
       - docker --config . manifest create ramosisw/openvpn ramosisw/openvpn:amd64 ramosisw/openvpn:arm
       - docker --config . manifest annotate --arch arm ramosisw/openvpn ramosisw/openvpn:arm
       - docker --config . manifest push ramosisw/openvpn
+
+depends_on:
+- build-arm
+- build-amd64

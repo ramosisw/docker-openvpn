@@ -51,7 +51,7 @@ name: multiarch
 
 steps:
   - name: pull tag and push
-    image: docker:dind
+    image: docker
     environment:
       repo: ramosisw/openvpn"
       username: ramosisw

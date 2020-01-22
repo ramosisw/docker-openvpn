@@ -9,12 +9,11 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      dockerfile: ./Dockerfile
-      repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=nightly}-arm
       password:
         from_secret: docker_password
+      repo: ramosisw/openvpn
+      tags: ${DRONE_TAG=nightly}-arm
 
 trigger:
   event: [ tag, push ]
@@ -32,12 +31,11 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      dockerfile: ./Dockerfile
-      repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=nightly}-arm64
       password:
         from_secret: docker_password
+      repo: ramosisw/openvpn
+      tags: ${DRONE_TAG=nightly}-arm64
 
 trigger:
   event: [ tag, push ]
@@ -55,12 +53,11 @@ steps:
   - name: push
     image: plugins/docker
     settings:
-      dockerfile: ./Dockerfile
-      repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=nightly}-amd64
       password:
         from_secret: docker_password
+      repo: ramosisw/openvpn
+      tags: ${DRONE_TAG=nightly}-amd64
 
 trigger:
   event: [ tag, push ]

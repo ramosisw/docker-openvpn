@@ -17,8 +17,7 @@ steps:
         from_secret: docker_password
 
 trigger:
-  event:
-    - tag
+  event: [ tag, push ]
 
 ---
 
@@ -41,8 +40,7 @@ steps:
         from_secret: docker_password
 
 trigger:
-  event:
-    - tag
+  event: [ tag, push ]
 
 ---
 
@@ -65,8 +63,7 @@ steps:
         from_secret: docker_password
 
 trigger:
-  event:
-    - tag
+  event: [ tag, push ]
 
 ---
 
@@ -103,8 +100,7 @@ steps:
         - linux/amd64
 
 trigger:
-  event:
-    - tag
+  event: [ tag, push ]
 
 depends_on:
  - build-arm

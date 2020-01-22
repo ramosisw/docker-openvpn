@@ -14,8 +14,6 @@ steps:
       tags: [ dev-arm ]
       password:
         from_secret: docker_password
-    when:
-      event: tag
   - name: push
     image: plugins/docker
     settings:

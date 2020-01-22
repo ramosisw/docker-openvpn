@@ -6,26 +6,19 @@ platform:
   arch: arm
 
 steps:
-  - name: build
-    image: plugins/docker
-    settings:
-      repo: ramosisw/openvpn
-      username: ramosisw
-      tags: [ dev-arm ]
-      password:
-        from_secret: docker_password
   - name: push
     image: plugins/docker
     settings:
+      dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: [ "arm", "${DRONE_TAG}-arm" ]
+      tags: ${DRONE_TAG=dev}-arm
       password:
         from_secret: docker_password
-    when:
-      event: tag
+
 trigger:
-  event: [ tag, push ]
+  event:
+    - tag
 
 ---
 
@@ -40,18 +33,16 @@ steps:
   - name: push
     image: plugins/docker
     settings:
+      dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: 
-        - arm64
-        - ${DRONE_TAG}arm64
+      tags: ${DRONE_TAG=dev}-arm64
       password:
         from_secret: docker_password
 
 trigger:
   event:
     - tag
-    - push
 
 ---
 
@@ -66,18 +57,16 @@ steps:
   - name: push
     image: plugins/docker
     settings:
+      dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: 
-        - amd64
-        - ${DRONE_TAG}amd64
+      tags: ${DRONE_TAG=dev}-amd64
       password:
         from_secret: docker_password
 
 trigger:
   event:
     - tag
-    - push
 
 ---
 
@@ -97,15 +86,17 @@ steps:
         - linux/arm
         - linux/arm64
         - linux/amd64
+    when:
+      event: tag
 
-  - name: manifest ${DRONE_TAG}
+  - name: manifest ${DRONE_TAG=dev}
     image: plugins/manifest
     settings:
       username: ramosisw
       password:
         from_secret: docker_password
-      target: ramosisw/openvpn:${DRONE_TAG}
-      template: ramosisw/openvpn:${DRONE_TAG}ARCH
+      target: ramosisw/openvpn:${DRONE_TAG=dev}
+      template: ramosisw/openvpn:${DRONE_TAG=dev}-ARCH
       platforms:
         - linux/arm
         - linux/arm64

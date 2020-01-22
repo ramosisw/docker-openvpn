@@ -12,7 +12,7 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=dev}-arm
+      tags: ${DRONE_TAG=nightly}-arm
       password:
         from_secret: docker_password
 
@@ -35,7 +35,7 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=dev}-arm64
+      tags: ${DRONE_TAG=nightly}-arm64
       password:
         from_secret: docker_password
 
@@ -58,7 +58,7 @@ steps:
       dockerfile: ./Dockerfile
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: ${DRONE_TAG=dev}-amd64
+      tags: ${DRONE_TAG=nightly}-amd64
       password:
         from_secret: docker_password
 
@@ -78,7 +78,7 @@ steps:
       password:
         from_secret: docker_password
       target: ramosisw/openvpn:latest
-      template: ramosisw/openvpn:${DRONE_TAG=dev}-ARCH
+      template: ramosisw/openvpn:${DRONE_TAG=nightly}-ARCH
       platforms:
         - linux/arm
         - linux/arm64
@@ -86,14 +86,14 @@ steps:
     when:
       event: tag
 
-  - name: manifest ${DRONE_TAG=dev}
+  - name: manifest ${DRONE_TAG=nightly}
     image: plugins/manifest
     settings:
       username: ramosisw
       password:
         from_secret: docker_password
-      target: ramosisw/openvpn:${DRONE_TAG=dev}
-      template: ramosisw/openvpn:${DRONE_TAG=dev}-ARCH
+      target: ramosisw/openvpn:${DRONE_TAG=nightly}
+      template: ramosisw/openvpn:${DRONE_TAG=nightly}-ARCH
       platforms:
         - linux/arm
         - linux/arm64

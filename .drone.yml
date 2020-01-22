@@ -11,9 +11,7 @@ steps:
     settings:
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: 
-        - arm
-        - devarm
+      tags: [arm, ${DRONE_TAG}-arm]
       password:
         from_secret: docker_password
 
@@ -39,7 +37,7 @@ steps:
       username: ramosisw
       tags: 
         - arm64
-        - devarm64
+        - ${DRONE_TAG}arm64
       password:
         from_secret: docker_password
 
@@ -65,7 +63,7 @@ steps:
       username: ramosisw
       tags: 
         - amd64
-        - devamd64
+        - ${DRONE_TAG}amd64
       password:
         from_secret: docker_password
 
@@ -93,14 +91,14 @@ steps:
         - linux/arm64
         - linux/amd64
 
-  - name: manifest dev
+  - name: manifest ${DRONE_TAG}
     image: plugins/manifest
     settings:
       username: ramosisw
       password:
         from_secret: docker_password
-      target: ramosisw/openvpn:dev
-      template: ramosisw/openvpn:devARCH
+      target: ramosisw/openvpn:${DRONE_TAG}
+      template: ramosisw/openvpn:${DRONE_TAG}ARCH
       platforms:
         - linux/arm
         - linux/arm64

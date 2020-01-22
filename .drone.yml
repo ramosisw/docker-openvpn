@@ -78,7 +78,7 @@ steps:
       password:
         from_secret: docker_password
       target: ramosisw/openvpn:latest
-      template: ramosisw/openvpn:ARCH
+      template: ramosisw/openvpn:${DRONE_TAG=dev}-ARCH
       platforms:
         - linux/arm
         - linux/arm64

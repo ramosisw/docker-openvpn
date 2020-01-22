@@ -19,7 +19,7 @@ steps:
     settings:
       repo: ramosisw/openvpn
       username: ramosisw
-      tags: [ arm, ${DRONE_TAG}-arm ]
+      tags: [ "arm", "${DRONE_TAG}-arm" ]
       password:
         from_secret: docker_password
     when:
